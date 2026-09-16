@@ -300,6 +300,9 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // ---------- 시작 ----------
+// 저장한 악보를 브라우저가 공간 정리 때 지우지 않도록 요청
+navigator.storage?.persist?.().catch(() => {});
+
 buildSettings();
 updateMenuLabels();
 renderLibrary();

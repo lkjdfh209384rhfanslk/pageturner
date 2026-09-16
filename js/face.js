@@ -1,7 +1,7 @@
 // 전면 카메라 + MediaPipe Face Landmarker. 얼굴 값을 주기적으로 콜백에 넘긴다.
 import { FilesetResolver, FaceLandmarker } from '../vendor/mediapipe/vision_bundle.mjs';
 
-const INTERVAL_MS = 66; // 약 15fps면 충분하고 배터리/발열이 줄어든다
+const INTERVAL_MS = 33; // 약 30fps: 입 벌림을 빨리 잡기 위해
 
 let landmarker = null;
 let stream = null;

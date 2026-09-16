@@ -46,7 +46,8 @@ export class GestureEngine {
       if (v < thr || !slot.armed || inCooldown) { slot.aboveSince = null; continue; }
 
       slot.aboveSince ??= now;
-      const p = (now - slot.aboveSince) / settings.holdMs;
+      const held = now - slot.aboveSince;
+      const p = settings.holdMs > 0 ? held / settings.holdMs : 1; // 유지 시간 0이면 기준을 넘는 즉시 발동
       if (p >= 1) {
         slot.aboveSince = null;
         slot.armed = false;

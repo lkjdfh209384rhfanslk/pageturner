@@ -35,9 +35,9 @@
   <!-- 뷰어 -->
   <section id="viewer" class="screen">
     <div id="pages" class="pages"></div>
-    <div id="tap-prev" class="tap-zone prev"></div>
-    <div id="tap-next" class="tap-zone next"></div>
-    <div id="tap-menu" class="tap-zone menu"></div>
+    <div id="tap-prev" class="tap-zone zone-prev"></div>
+    <div id="tap-next" class="tap-zone zone-next"></div>
+    <div id="tap-menu" class="tap-zone zone-menu"></div>
 
     <div id="flash" class="flash"></div>
 
@@ -80,7 +80,7 @@
         </div>
         <div class="row">
           <label for="hold-ms">유지 시간 <output id="hold-out"></output></label>
-          <input id="hold-ms" type="range" min="100" max="1500" step="50">
+          <input id="hold-ms" type="range" min="0" max="1500" step="50">
         </div>
         <div class="row">
           <label for="cooldown-ms">쿨다운 <output id="cooldown-out"></output></label>
