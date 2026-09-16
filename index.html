@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="악보넘김">
+  <meta name="theme-color" content="#111111">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>악보넘김</title>
+</head>
+<body>
+
+  <!-- 라이브러리 -->
+  <section id="library" class="screen active">
+    <header class="bar">
+      <h1>악보넘김</h1>
+      <div class="bar-actions">
+        <button id="open-settings" class="btn">제스처 설정</button>
+        <label class="btn primary">
+          PDF 추가
+          <input id="file-input" type="file" accept="application/pdf,.pdf" multiple hidden>
+        </label>
+      </div>
+    </header>
+    <ul id="pdf-list" class="pdf-list"></ul>
+    <p id="empty-msg" class="empty">오른쪽 위 <b>PDF 추가</b>로 악보를 불러오세요.</p>
+  </section>
+
+  <!-- 뷰어 -->
+  <section id="viewer" class="screen">
+    <div id="pages" class="pages"></div>
+    <div id="tap-prev" class="tap-zone prev"></div>
+    <div id="tap-next" class="tap-zone next"></div>
+    <div id="tap-menu" class="tap-zone menu"></div>
+
+    <div id="flash" class="flash"></div>
+
+    <div id="status" class="status">
+      <span id="face-dot" class="dot"></span>
+      <span class="gauge"><span id="gauge-fill"></span></span>
+    </div>
+
+    <div id="menu" class="menu hidden">
+      <button id="back-library" class="btn">← 목록</button>
+      <span id="page-label" class="page-label"></span>
+      <button id="toggle-gesture" class="btn">제스처 켜짐</button>
+      <button id="toggle-spread" class="btn">가로 2페이지</button>
+      <button id="viewer-settings" class="btn">설정</button>
+    </div>
+  </section>
+
+  <!-- 설정 / 보정 -->
+  <section id="settings" class="screen">
+    <header class="bar">
+      <button id="close-settings" class="btn">← 돌아가기</button>
+      <h1>제스처 설정</h1>
+      <span></span>
+    </header>
+    <div class="settings-body">
+      <div class="cam-wrap">
+        <div id="cam-slot" class="cam-slot"></div>
+        <p id="cam-msg" class="cam-msg">카메라 준비 중…</p>
+        <div id="test-flash" class="test-flash"></div>
+      </div>
+
+      <div class="panel">
+        <div class="row">
+          <label for="next-gesture">다음 페이지</label>
+          <select id="next-gesture"></select>
+        </div>
+        <div class="row">
+          <label for="prev-gesture">이전 페이지</label>
+          <select id="prev-gesture"></select>
+        </div>
+        <div class="row">
+          <label for="hold-ms">유지 시간 <output id="hold-out"></output></label>
+          <input id="hold-ms" type="range" min="100" max="1500" step="50">
+        </div>
+        <div class="row">
+          <label for="cooldown-ms">쿨다운 <output id="cooldown-out"></output></label>
+          <input id="cooldown-ms" type="range" min="300" max="4000" step="100">
+        </div>
+        <p class="hint">
+          막대는 지금 얼굴에서 읽은 값이고, 세로선이 발동 기준값입니다. 슬라이더로 기준값을 조절하세요.
+          피아노 앞에서 평소처럼 연주하면서 막대가 기준선을 넘지 않는지, 일부러 동작했을 때만 넘는지 확인하면 됩니다.
+          왼쪽/오른쪽이 반대로 느껴지면 반대쪽 제스처를 선택하세요.
+        </p>
+        <div id="meters" class="meters"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="cam-park" class="cam-park">
+    <video id="cam" playsinline muted autoplay></video>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
