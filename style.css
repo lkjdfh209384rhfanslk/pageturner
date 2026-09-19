@@ -46,11 +46,14 @@ body { -webkit-user-select: none; user-select: none; }
 .zone-next { right: 0; width: 66.67%; }
 .zone-menu { left: 0; right: 0; top: 0; bottom: auto; height: 72px; z-index: 6; }
 
-.flash { position: absolute; top: 0; bottom: 0; width: 10px; z-index: 7; opacity: 0; pointer-events: none;
-  background: var(--accent); transition: opacity .4s; }
-.flash.next { right: 0; }
-.flash.prev { left: 0; }
-.flash.on { opacity: .8; transition: none; }
+/* 넘김 알림: 악보를 가리지 않게 화면 가장자리 테두리만 색으로 표시 */
+.flash { position: absolute; inset: 0; z-index: 7; pointer-events: none; opacity: 0;
+  border: 10px solid var(--flash-color, var(--ok)); transition: opacity .6s; }
+.flash.next { --flash-color: #22c55e; }
+.flash.prev { --flash-color: #f97316; }
+.flash.edge { --flash-color: #ef4444; }
+.flash.on { opacity: .85; transition: none; animation: flash-pop .5s ease-out; }
+@keyframes flash-pop { from { border-width: 22px; opacity: 1; } to { border-width: 10px; opacity: .85; } }
 
 .status { position: absolute; right: calc(env(safe-area-inset-right) + 10px); bottom: calc(env(safe-area-inset-bottom) + 10px);
   z-index: 8; display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 12px;
@@ -75,7 +78,8 @@ body { -webkit-user-select: none; user-select: none; }
 .cam-slot video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
 .cam-msg { color: var(--muted); font-size: 14px; }
 .test-flash { position: absolute; left: 12px; top: 12px; padding: 8px 14px; border-radius: 10px; font-size: 20px; font-weight: 700;
-  background: var(--accent); opacity: 0; transition: opacity .6s; pointer-events: none; }
+  background: #22c55e; opacity: 0; transition: opacity .6s; pointer-events: none; }
+.test-flash.prev { background: #f97316; }
 .test-flash.on { opacity: 1; transition: none; }
 
 .panel { flex: 1 1 360px; }
