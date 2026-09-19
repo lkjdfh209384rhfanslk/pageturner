@@ -88,17 +88,21 @@ async function openPdf(id) {
 async function turn(action) {
   if (screen !== 'viewer') return;
   const moved = await viewer.go(action === 'next' ? 1 : -1);
-  flash(action);
+  flash(moved ? action : 'edge');
   if (moved && currentId) updatePdf(currentId, { lastPage: viewer.page });
   updateMenuLabels();
 }
 
+// 화면 테두리 색으로 넘김 알림: 초록=다음, 주황=이전, 빨강=첫/마지막 페이지라 못 넘김
+const FLASH_MS = 3000;
 let flashTimer;
-function flash(action) {
+function flash(kind) {
   const el = $('flash');
-  el.className = `flash ${action} on`;
+  el.className = 'flash';
+  void el.offsetWidth; // 연속으로 넘길 때도 깜빡임이 다시 시작되도록
+  el.className = `flash ${kind} on`;
   clearTimeout(flashTimer);
-  flashTimer = setTimeout(() => el.classList.remove('on'), 150);
+  flashTimer = setTimeout(() => el.classList.remove('on'), FLASH_MS);
 }
 
 // 메뉴가 열려 있을 때 화면을 탭하면 넘기지 않고 메뉴만 닫는다
@@ -201,7 +205,7 @@ let testTimer;
 function testFlash(action) {
   const el = $('test-flash');
   el.textContent = action === 'next' ? '다음 페이지 →' : '← 이전 페이지';
-  el.classList.add('on');
+  el.className = `test-flash ${action} on`;
   clearTimeout(testTimer);
   testTimer = setTimeout(() => el.classList.remove('on'), 700);
 }
@@ -212,6 +216,7 @@ const meterEls = {};
 function buildSettings() {
   for (const id of ['next-gesture', 'prev-gesture']) {
     const sel = $(id);
+    sel.append(new Option('사용 안 함', 'none'));
     for (const g of GESTURES) sel.append(new Option(g.label, g.id));
   }
   $('next-gesture').value = settings.nextGesture;
